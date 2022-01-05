@@ -7,11 +7,11 @@ import java.util.LinkedList;
 
 
 public class Input {
-    private Santa.SantaBuilder santa;
-    private LinkedList<AnualChanges.AnualChangesBuilder> anualChanges;
+    private Santa santa;
+    private LinkedList<AnualChanges> anualChanges;
 
-    public Input(final Santa.SantaBuilder santa,
-                 final LinkedList<AnualChanges.AnualChangesBuilder> anualChanges) {
+    public Input(final Santa santa,
+                 final LinkedList<AnualChanges> anualChanges) {
         this.santa = santa;
         this.anualChanges = anualChanges;
     }
@@ -19,14 +19,14 @@ public class Input {
     /**
      * @return
      */
-    public Santa.SantaBuilder getSanta() {
+    public Santa getSanta() {
         return santa;
     }
 
     /**
      * @return
      */
-    public LinkedList<AnualChanges.AnualChangesBuilder> getAnualChanges() {
+    public LinkedList<AnualChanges> getAnualChanges() {
         return anualChanges;
     }
 }

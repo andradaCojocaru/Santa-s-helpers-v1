@@ -34,8 +34,8 @@ public final class Utils {
      * @param jsonChildren
      * @return
      */
-    public static LinkedList<Child.ChildBuilder> jsonNewChildren(final JSONArray jsonChildren) {
-        LinkedList<Child.ChildBuilder> children = new LinkedList<>();
+    public static LinkedList<Child> jsonNewChildren(final JSONArray jsonChildren) {
+        LinkedList<Child> children = new LinkedList<>();
         if (jsonChildren != null) {
             for (Object jsonChild : jsonChildren) {
                 children.add(new Child.ChildBuilder(((Long)
@@ -52,7 +52,8 @@ public final class Utils {
                                 ((JSONObject) jsonChild).get(Constants.NICE_SCORE)).doubleValue(),
                         Utils.giftPreferences((JSONArray)
                                 ((JSONObject) jsonChild)
-                                        .get(Constants.GIFT_PREFERENCES))));
+                                        .get(Constants.GIFT_PREFERENCES)))
+                        .build());
             }
         }
         return children;
@@ -62,8 +63,8 @@ public final class Utils {
      * @param jsonSantaGiftsList
      * @return
      */
-    public static LinkedList<Gift.GiftBuilder> jsonGifts(final JSONArray jsonSantaGiftsList) {
-        LinkedList<Gift.GiftBuilder> giftList = new LinkedList<>();
+    public static LinkedList<Gift> jsonGifts(final JSONArray jsonSantaGiftsList) {
+        LinkedList<Gift> giftList = new LinkedList<>();
         if (jsonSantaGiftsList != null) {
             for (Object santaGift : jsonSantaGiftsList) {
                 giftList.add(new Gift.GiftBuilder((String)
@@ -72,7 +73,8 @@ public final class Utils {
                         ((Long) ((JSONObject) santaGift)
                                 .get(Constants.PRICE)).doubleValue(),
                         (String) ((JSONObject) santaGift)
-                                .get(Constants.CATEGORY)));
+                                .get(Constants.CATEGORY))
+                        .build());
             }
         }
         return giftList;
@@ -82,9 +84,9 @@ public final class Utils {
      * @param jsonChildrenUpdates
      * @return
      */
-    public static LinkedList<ChildrenUpdate.ChildrenUpdateBuilder>
+    public static LinkedList<ChildrenUpdate>
     jsonChildrenMakeUpdates(final JSONArray jsonChildrenUpdates) {
-        LinkedList<ChildrenUpdate.ChildrenUpdateBuilder> children = new LinkedList<>();
+        LinkedList<ChildrenUpdate> children = new LinkedList<>();
         Double score = 0.0;
         if (jsonChildrenUpdates != null) {
             for (Object santaGift : jsonChildrenUpdates) {
@@ -100,7 +102,8 @@ public final class Utils {
                         score,
                         Utils.giftPreferences((JSONArray)
                                 ((JSONObject) santaGift)
-                                        .get(Constants.GIFT_PREFERENCES))));
+                                        .get(Constants.GIFT_PREFERENCES)))
+                        .build());
             }
         }
         return children;
@@ -110,9 +113,9 @@ public final class Utils {
      * @param jsonAnnualChanges
      * @return
      */
-    public static LinkedList<AnualChanges.AnualChangesBuilder>
+    public static LinkedList<AnualChanges>
     anualChanges(final JSONArray jsonAnnualChanges) {
-        LinkedList<AnualChanges.AnualChangesBuilder> changes = new LinkedList<>();
+        LinkedList<AnualChanges> changes = new LinkedList<>();
         if (jsonAnnualChanges != null) {
             for (Object anualChange : jsonAnnualChanges) {
                 JSONArray jsonNewChild =
@@ -126,7 +129,8 @@ public final class Utils {
                                 .doubleValue(),
                                 Utils.jsonGifts(jsonGifts),
                                 Utils.jsonNewChildren(jsonNewChild),
-                                Utils.jsonChildrenMakeUpdates(jsonChildrenUpdates)));
+                                Utils.jsonChildrenMakeUpdates(jsonChildrenUpdates))
+                        .build());
             }
         }
         return changes;

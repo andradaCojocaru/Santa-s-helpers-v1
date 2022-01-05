@@ -4,21 +4,20 @@ import java.util.LinkedList;
 
 public final class AnualChanges {
     private Double newSantaBudget;
-    private LinkedList<Gift.GiftBuilder> newGifts;
-    private LinkedList<Child.ChildBuilder> newChildren;
-    private LinkedList<ChildrenUpdate.ChildrenUpdateBuilder> childrenUpdate;
+    private LinkedList<Gift> newGifts;
+    private LinkedList<Child> newChildren;
+    private LinkedList<ChildrenUpdate> childrenUpdate;
 
     public static class AnualChangesBuilder {
         private Double newSantaBudget;
-        private LinkedList<Gift.GiftBuilder> newGifts;
-        private LinkedList<Child.ChildBuilder> newChildren;
-        private LinkedList<ChildrenUpdate.ChildrenUpdateBuilder> childrenUpdate;
+        private LinkedList<Gift> newGifts;
+        private LinkedList<Child> newChildren;
+        private LinkedList<ChildrenUpdate> childrenUpdate;
 
         public AnualChangesBuilder(final Double newSantaBudget,
-                                   final LinkedList<Gift.GiftBuilder> newGifts,
-                                   final LinkedList<Child.ChildBuilder> newChildren,
-                                   final LinkedList<ChildrenUpdate.ChildrenUpdateBuilder>
-                                           childrenUpdate) {
+                                   final LinkedList<Gift> newGifts,
+                                   final LinkedList<Child> newChildren,
+                                   final LinkedList<ChildrenUpdate> childrenUpdate) {
             this.newSantaBudget = newSantaBudget;
             this.newGifts = newGifts;
             this.newChildren = newChildren;
@@ -43,15 +42,15 @@ public final class AnualChanges {
         return newSantaBudget;
     }
 
-    public LinkedList<Gift.GiftBuilder> getNewGifts() {
+    public LinkedList<Gift> getNewGifts() {
         return newGifts;
     }
 
-    public LinkedList<Child.ChildBuilder> getNewChildren() {
+    public LinkedList<Child> getNewChildren() {
         return newChildren;
     }
 
-    public LinkedList<ChildrenUpdate.ChildrenUpdateBuilder> getChildrenUpdate() {
+    public LinkedList<ChildrenUpdate> getChildrenUpdate() {
         return childrenUpdate;
     }
 }

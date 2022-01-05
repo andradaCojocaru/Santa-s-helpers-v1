@@ -34,9 +34,9 @@ public class InputLoader {
      */
     public Input readData() {
         JSONParser jsonParser = new JSONParser();
-        LinkedList<AnualChanges.AnualChangesBuilder> anualChanges = new LinkedList<>();
-        LinkedList<Child.ChildBuilder> children = new LinkedList<>();
-        LinkedList<Gift.GiftBuilder> giftList = new LinkedList<>();
+        LinkedList<AnualChanges> anualChanges = new LinkedList<>();
+        LinkedList<Child> children = new LinkedList<>();
+        LinkedList<Gift> giftList = new LinkedList<>();
         int jsonNumberOfYears = 0;
         Double jsonSantaBudget = null;
 
@@ -58,7 +58,8 @@ public class InputLoader {
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
-        Santa.SantaBuilder santa = new Santa.SantaBuilder(jsonNumberOfYears, jsonSantaBudget, giftList, children);
+        Santa santa = new Santa.SantaBuilder(jsonNumberOfYears, jsonSantaBudget, giftList, children)
+                .build();
         return new Input(santa, anualChanges);
     }
 }

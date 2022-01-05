@@ -1,6 +1,6 @@
 package entities;
 
-public class Gift {
+public final class Gift {
     private String productName;
     private Double price;
     private String category;
@@ -17,11 +17,14 @@ public class Gift {
             this.category = category;
         }
 
+        /**
+         * @return
+         */
         public Gift build() {
             return new Gift(this);
         }
     }
-    private Gift (GiftBuilder giftBuilder) {
+    private Gift(final GiftBuilder giftBuilder) {
         this.productName = giftBuilder.productName;
         this.price = giftBuilder.price;
         this.category = giftBuilder.category;
