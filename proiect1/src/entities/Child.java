@@ -10,8 +10,7 @@ public final class Child {
     private int age;
     private LinkedList<String> giftPreferences;
     private Double averageScore;
-    private Double niceScore;
-    private LinkedList<Integer> niceScoreHistory;
+    private LinkedList<Double> niceScoreHistory;
     private Double assignedBudget;
     private LinkedList<Gift> receivedGifts;
 
@@ -23,31 +22,31 @@ public final class Child {
         private int age;
         private LinkedList<String> giftPreferences;
         private Double averageScore;
-        private Double niceScore;
-        private LinkedList<Integer> niceScoreHistory;
+        private LinkedList<Double> niceScoreHistory;
         private Double assignedBudget;
         private LinkedList<Gift> receivedGifts;
 
         public ChildBuilder(final int id, final String lastName,
                             final String firstName, final int age,
                             final String city,
-                            final Double niceScore,
+                            final Double averageScore,
                             final LinkedList<String> giftPreferences) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
             this.age = age;
             this.city = city;
-            this.niceScore = niceScore;
+            this.averageScore = averageScore;
             this.giftPreferences = giftPreferences;
         }
 
+
         /**
-         * @param averageScore
+         * @param niceScoreHistory
          * @return
          */
-        public ChildBuilder averageScore(final Double averageScore) {
-            this.averageScore = averageScore;
+        public ChildBuilder niceScoreHistory(final LinkedList<Double> niceScoreHistory) {
+            this.niceScoreHistory = niceScoreHistory;
             return this;
         }
 
@@ -85,7 +84,6 @@ public final class Child {
             this.age = childBuilder.age;
             this.giftPreferences = childBuilder.giftPreferences;
             this.averageScore = childBuilder.averageScore;
-            this.niceScore = childBuilder.niceScore;
             this.niceScoreHistory = childBuilder.niceScoreHistory;
             this.assignedBudget = childBuilder.assignedBudget;
             this.receivedGifts = childBuilder.receivedGifts;
@@ -119,11 +117,7 @@ public final class Child {
         return averageScore;
     }
 
-    public Double getNiceScore() {
-        return niceScore;
-    }
-
-    public LinkedList<Integer> getNiceScoreHistory() {
+    public LinkedList<Double> getNiceScoreHistory() {
         return niceScoreHistory;
     }
 
@@ -135,19 +129,19 @@ public final class Child {
         return receivedGifts;
     }
 
-    @Override
-    public String toString() {
-        return "children{"
-                + "id=" + id
-                + " lastName='" + lastName
-                + " firstName='" + firstName
-                + " city='" + city
-                + " age=" + age
-                + " giftPreferences=" + giftPreferences
-                + " averageScore=" + averageScore
-                + " niceScoreHistory=" + niceScoreHistory
-                + " assignedBudget=" + assignedBudget
-                + " receivedGifts=" + receivedGifts
-                + '}';
+    public void setNiceScoreHistory(final LinkedList<Double> niceScoreHistory) {
+        this.niceScoreHistory = niceScoreHistory;
+    }
+
+    public void setAverageScore(final Double averageScore) {
+        this.averageScore = averageScore;
+    }
+
+    public void setAssignedBudget(final Double assignedBudget) {
+        this.assignedBudget = assignedBudget;
+    }
+
+    public void setReceivedGifts(final LinkedList<Gift> receivedGifts) {
+        this.receivedGifts = receivedGifts;
     }
 }

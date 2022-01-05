@@ -2,9 +2,9 @@ package entities;
 
 import java.util.LinkedList;
 public final class AnnualChildren {
-    LinkedList<Child> children;
+    private LinkedList<Child> children;
 
-    public AnnualChildren(LinkedList<Child> annualChildren) {
+    public AnnualChildren(final LinkedList<Child> annualChildren) {
             this.children = annualChildren;
     }
 
@@ -12,7 +12,7 @@ public final class AnnualChildren {
         return children;
     }
 
-    public void setChildren(LinkedList<Child> annualChildren) {
+    public void setChildren(final LinkedList<Child> annualChildren) {
         this.children = annualChildren;
     }
 
