@@ -1,6 +1,6 @@
 package main;
 
-import entities.AnualChanges;
+import changes.AnualChanges;
 import entities.Santa;
 
 import java.util.LinkedList;

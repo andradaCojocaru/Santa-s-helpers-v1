@@ -1,9 +1,9 @@
 package utils;
 
 import common.Constants;
-import entities.AnualChanges;
+import changes.AnualChanges;
 import entities.Child;
-import entities.ChildrenUpdate;
+import changes.ChildrenUpdate;
 import entities.Gift;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -88,10 +88,11 @@ public final class Utils {
     jsonChildrenMakeUpdates(final JSONArray jsonChildrenUpdates) {
         LinkedList<ChildrenUpdate> children = new LinkedList<>();
         Double score = 0.0;
+        final Double aboveScore = 11.0;
         if (jsonChildrenUpdates != null) {
             for (Object santaGift : jsonChildrenUpdates) {
                 if ((((JSONObject) santaGift).get(Constants.NICE_SCORE)) == null) {
-                    score = 0.0;
+                    score = aboveScore;
                 } else {
                     score = ((Long) ((JSONObject) santaGift)
                             .get(Constants.NICE_SCORE)).doubleValue();

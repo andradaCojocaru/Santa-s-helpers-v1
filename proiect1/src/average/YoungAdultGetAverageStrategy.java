@@ -13,6 +13,7 @@ public class YoungAdultGetAverageStrategy implements GetAverageStrategy {
      */
     @Override
     public Double getAverageScore() {
-        return 0.0;
+        final Double aboveAverage = 11.0;
+        return aboveAverage;
     }
 }

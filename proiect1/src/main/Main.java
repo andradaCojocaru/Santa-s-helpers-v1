@@ -1,23 +1,26 @@
 package main;
 
+import changes.AnualChanges;
+import changes.ChildrenUpdate;
+import changes.IncreaseAge;
+import changes.NewChildren;
+import changes.NewChildrenUpdates;
+import changes.NewGifts;
+import changes.NewSantaBudget;
 import checker.Checker;
-// import checker.Checkstyle;
 
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import common.Constants;
-// import fileio.Writer;
-import average.GetAverageStrategy;
-import average.GetAverageStrategyFactory;
 import entities.AnnualChildren;
 import entities.Child;
-import entities.Gift;
+import entities.CopySanta;
 import entities.ListResult;
 import entities.Santa;
-import gifts.GiftPutInCategories;
+import gifts.FindGifts;
 import gifts.GiftsArrays;
-import gifts.SortGifts;
+import gifts.SetGifts;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +34,7 @@ import java.util.Objects;
  * Class used to run the code
  */
 public final class Main {
-
+    final static int ABOVEAVERAGE=11;
     private Main() {
         ///constructor for checkstyle
     }
@@ -68,83 +71,48 @@ public final class Main {
                                   final String filePath2) throws IOException {
             InputLoader inputLoader = new InputLoader(filePath1);
             Input input = inputLoader.readData();
+            final Double aboveAverage = 11.0;
             Santa santaBuilder = input.getSanta();
-            Double sumAverage = 0.0;
-            Double budgetUnit = 0.0;
-            for (Child child : santaBuilder.getChildList()) {
-                LinkedList<Double> niceScore = new LinkedList<>();
-                niceScore.add(child.getAverageScore());
-                child.setNiceScoreHistory(niceScore);
-                GetAverageStrategyFactory getAverageStrategyFactory =
-                        new GetAverageStrategyFactory();
-                GetAverageStrategy getAverageStrategy =
-                        getAverageStrategyFactory.createStrategy(child);
-                child.setAverageScore(getAverageStrategy.getAverageScore());
-                sumAverage += child.getAverageScore();
-            }
-            budgetUnit = santaBuilder.getBudget() / sumAverage;
-            for (Child child : santaBuilder.getChildList()) {
-                child.setAssignedBudget(budgetUnit * child.getAverageScore());
-            }
-            GiftPutInCategories giftPutInCategories =
-                    new GiftPutInCategories(santaBuilder.getGiftList());
-            LinkedList<Gift> boardGames = new LinkedList<>();
-            LinkedList<Gift> books = new LinkedList<>();
-            LinkedList<Gift> clothes = new LinkedList<>();
-            LinkedList<Gift> sweets = new LinkedList<>();
-            LinkedList<Gift> technology = new LinkedList<>();
-            LinkedList<Gift> toys = new LinkedList<>();
-            GiftsArrays giftsArrays =
-                    new GiftsArrays(boardGames, books, clothes, sweets, technology, toys);
-            giftPutInCategories.giftSort(giftsArrays);
-            SortGifts sortGifts = new SortGifts();
-            sortGifts.sort();
-            sortGifts.mySort(boardGames);
-            sortGifts.mySort(books);
-            sortGifts.mySort(clothes);
-            sortGifts.mySort(sweets);
-            sortGifts.mySort(technology);
-            sortGifts.mySort(toys);
-            santaBuilder.getChildList().removeIf(x -> x.getAverageScore().equals(0.0));
-            for (Child child : santaBuilder.getChildList()) {
-                Double leftBudget = child.getAssignedBudget();
-                for (String gift : child.getGiftPreferences()) {
-                    LinkedList<Gift> giftType = new LinkedList<>();
-                    switch (gift) {
-                        case "Board Games": giftType = giftsArrays.getBoardGames();
-                            break;
-                        case "Books": giftType = giftsArrays.getBooks();
-                            break;
-                        case "Clothes": giftType = giftsArrays.getClothes();
-                            break;
-                        case "Sweets": giftType = giftsArrays.getSweets();
-                            break;
-                        case "Technology": giftType = giftsArrays.getTechnology();
-                            break;
-                        case "Toys": giftType = giftsArrays.getToys();
-                            break;
-                        default:
-                            throw new IllegalArgumentException("Type of gift not found ");
-                    }
-                    if (!giftType.isEmpty()) {
-                        Gift selectedGift = giftType.get(0);
-                        if (selectedGift.getPrice() <= leftBudget) {
-                            if (child.getReceivedGifts() == null) {
-                                LinkedList<Gift> receivedGifts = new LinkedList<>();
-                                child.setReceivedGifts(receivedGifts);
-                            }
-                            child.getReceivedGifts().add(selectedGift);
-                            child.setReceivedGifts(child.getReceivedGifts());
-                            leftBudget -= selectedGift.getPrice();
-                        }
-                    }
-                }
-            }
+            LinkedList<AnualChanges> anualChanges = input.getAnualChanges();
+            DataInput dataInput = new DataInput();
+            dataInput.setData(santaBuilder);
+            SetGifts setGifts = new SetGifts();
+            GiftsArrays giftsArrays = setGifts.setGiftsInArray(santaBuilder);
+            FindGifts findGifts = new FindGifts();
+            findGifts.findGiftsChildren(santaBuilder, giftsArrays);
             LinkedList<AnnualChildren> listAnnualChildren = new LinkedList<>();
-            for (int i = 0; i <= santaBuilder.getNumberOfYears(); i++) {
-                AnnualChildren annualChildren =
-                        new AnnualChildren(santaBuilder.getChildList());
+            CopySanta copySanta = new CopySanta();
+            AnnualChildren annualChildren =
+                    new AnnualChildren(copySanta.copyConstructor(santaBuilder));
+            listAnnualChildren.add(annualChildren);
+            for (Child child : santaBuilder.getChildList()) {
+                child.setReceivedGifts(null);
+            }
+            for (int i = 0; i < santaBuilder.getNumberOfYears(); i++) {
+
+                IncreaseAge increaseAge = new IncreaseAge();
+                increaseAge.applyIncreaseAge(santaBuilder);
+                AnualChanges change = anualChanges.get(i);
+                NewSantaBudget newSantaBudget = new NewSantaBudget();
+                newSantaBudget.putNewSantaBudget(santaBuilder, change.getNewSantaBudget());
+                NewGifts newGifts = new NewGifts();
+                newGifts.putGifts(santaBuilder, change.getNewGifts(), giftsArrays);
+                NewChildren newChildren = new NewChildren();
+                newChildren.addNewChildren(santaBuilder, change.getNewChildren());
+                NewChildrenUpdates newChildrenUpdates = new NewChildrenUpdates();
+                LinkedList<ChildrenUpdate> update = new LinkedList<>();
+                update = change.getChildrenUpdate();
+                newChildrenUpdates.makeNewChildrenUpdates(santaBuilder, update);
+                dataInput.setData(santaBuilder);
+                findGifts.findGiftsChildren(santaBuilder, giftsArrays);
+                copySanta = new CopySanta();
+                copySanta.copyConstructor(santaBuilder);
+                annualChildren =
+                        new AnnualChildren(copySanta.copyConstructor(santaBuilder));
                 listAnnualChildren.add(annualChildren);
+                for (Child child : santaBuilder.getChildList()) {
+                    child.setReceivedGifts(null);
+                }
             }
             ListResult listResult = new ListResult(listAnnualChildren);
             try {

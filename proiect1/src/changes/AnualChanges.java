@@ -1,4 +1,7 @@
-package entities;
+package changes;
+
+import entities.Child;
+import entities.Gift;
 
 import java.util.LinkedList;
 

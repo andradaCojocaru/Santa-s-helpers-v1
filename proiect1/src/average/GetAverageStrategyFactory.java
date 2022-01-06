@@ -16,7 +16,7 @@ public class GetAverageStrategyFactory {
             type = "BABY";
         } else if (child.getAge() >= five && child.getAge() < twelve) {
             type = "KID";
-        } else if (child.getAge() >= twelve && child.getAge() < eighteen) {
+        } else if (child.getAge() >= twelve && child.getAge() <= eighteen) {
             type = "TEEN";
         } else {
             type = "YOUNG_ADULT";

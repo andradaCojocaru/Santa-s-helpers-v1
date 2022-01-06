@@ -4,7 +4,7 @@ import entities.Gift;
 import org.json.simple.parser.ParseException;
 import utils.Utils;
 import common.Constants;
-import entities.AnualChanges;
+import changes.AnualChanges;
 import entities.Child;
 import entities.Santa;
 import org.json.simple.JSONArray;

@@ -13,7 +13,7 @@ public class GiftPutInCategories {
     /**
      * @param giftsArrays
      */
-    public void giftSort(final GiftsArrays giftsArrays) {
+    public void giftSortType(final GiftsArrays giftsArrays) {
         for (Gift gift : gifts) {
             switch (gift.getCategory()) {
                 case "Board Games": giftsArrays.getBoardGames().add(gift);
